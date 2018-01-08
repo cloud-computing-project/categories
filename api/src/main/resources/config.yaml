@@ -1,12 +1,12 @@
 kumuluzee:
-  name: rso-categories
+  name: categories
   env:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8081
+    base-url: http://localhost:8085
     http:
-      port: 8081
+      port: 8085
   datasources:
     - jndi-name: jdbc/CategoriesDS
       connection-url: jdbc:postgresql://192.168.99.100:5433/categorie
