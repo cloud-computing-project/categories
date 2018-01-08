@@ -9,7 +9,7 @@ docker run -d --name categories -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=pos
 ## Run application in Docker
 
 ```bash
-docker run -p 8085:8085 ejmric/categories
+docker run -p 8084:8084 ejmric/categories
 ```
 
 ## Travis status 
