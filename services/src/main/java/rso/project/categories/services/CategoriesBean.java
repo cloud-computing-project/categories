@@ -69,7 +69,7 @@ public class CategoriesBean {
         if (categorie == null) {
             throw new NotFoundException();
         }
-
+        log.info("product service enabled: " + restProperties.isProductServiceEnabled());
         if (restProperties.isProductServiceEnabled()) {
             List<Product> products = categoriesBean.getProducts(categorieId);
             log.info("list of products: " + products.toString());
@@ -80,12 +80,12 @@ public class CategoriesBean {
         return categorie;
     }
 
-    public List<Product> getProducts(String itemSpecificId) {
+    public List<Product> getProducts(String categorieId) {
         log.info("base url products " + baseUrlProducts);
         if (baseUrlProducts.isPresent()) {
             try {
                 return httpClient
-                        .target(baseUrlProducts.get() + "/v1/products?where=categories:EQ:" + itemSpecificId)
+                        .target(baseUrlProducts.get() + "/v1/products?where=categories:EQ:" + categorieId)
                         .request().get(new GenericType<List<Product>>() {
                         });
             } catch (WebApplicationException | ProcessingException e) {

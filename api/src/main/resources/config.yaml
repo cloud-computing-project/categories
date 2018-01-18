@@ -24,5 +24,8 @@ kumuluzee:
         data-source-health-check:
           jndi-name: jdbc/CategoriesDS
   rest-properties:
+    external-services:
+      product-service:
+        enabled: true
   healthy: true
 
