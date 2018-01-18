@@ -78,12 +78,12 @@ public class CategoriesBean {
             throw new NotFoundException();
         }
         log.info("product service enabled: " + restProperties.isProductServiceEnabled());
-        if (restProperties.isProductServiceEnabled()) {
+//        if (restProperties.isProductServiceEnabled()) {
             List<Product> products = categoriesBean.getProducts(categorieId);
             log.info("list of products: " + products.toString());
             categorie.setProducts(products);
             log.info("list of products for itemSpecificId: " + categorie.getProducts().toString());
-        }
+//        }
 
         return categorie;
     }
