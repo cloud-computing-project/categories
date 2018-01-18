@@ -10,7 +10,7 @@ spec:
         app: categorie
     spec:
       containers:
-      - image: ejmric/categories:0.02
+      - image: ejmric/categories:0.03
         name: categories
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
