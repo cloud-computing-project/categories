@@ -39,9 +39,9 @@ public class CategoriesResource {
 
     @GET
     @Path("/{categorieId}")
-    public Response getCategorie(@PathParam("categorieId") String categorieId) {
+    public Response getCategories(@PathParam("categorieId") String categorieId) {
         log.info("get categorie resource");
-        Categorie categorie = categoriesBean.getCategorie(categorieId);
+        Categorie categorie = categoriesBean.getCategories(categorieId);
 
         if (categorie == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

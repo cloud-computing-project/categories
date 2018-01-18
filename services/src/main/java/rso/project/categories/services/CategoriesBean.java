@@ -70,7 +70,7 @@ public class CategoriesBean {
 
     }
 
-    public Categorie getCategorie(String categorieId) {
+    public Categorie getCategories(String categorieId) {
         log.info("INSIDE GET CATEGORY");
         Categorie categorie = em.find(Categorie.class, categorieId);
 
