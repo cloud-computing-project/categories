@@ -24,6 +24,9 @@ public class Categorie {
 
     private String description;
 
+    @Transient
+    private List<Product> products;
+
     public String getId() {
         return id;
     }
@@ -40,5 +43,11 @@ public class Categorie {
 
     public void setDescription(String description){this.description = description;}
 
+    public List<Product> getProducts() {
+        return products;
+    }
 
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }

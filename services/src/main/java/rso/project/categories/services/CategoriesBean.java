@@ -3,19 +3,54 @@ package rso.project.categories.services;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import rso.project.categories.Categorie;
+import rso.project.categories.Product;
+import rso.project.categories.services.config.RestProperties;
 
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
+import javax.persistence.TypedQuery;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.UriInfo;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class CategoriesBean {
 
+    private Logger log = LogManager.getLogger(CategoriesBean.class.getName());
+
     @Inject
     private EntityManager em;
+
+    private Client httpClient;
+
+    @Inject
+    private RestProperties restProperties;
+
+    @Inject
+    private CategoriesBean categoriesBean;
+
+    @Inject
+    @DiscoverService("products")
+    private Optional<String> baseUrlProducts;
+
+    public List<Categorie> getCategories() {
+
+        TypedQuery<Categorie> query = em.createNamedQuery("Categorie.getAll", Categorie.class);
+
+        return query.getResultList();
+
+    }
 
     public List<Categorie> getCategories(UriInfo uriInfo) {
 
@@ -35,7 +70,35 @@ public class CategoriesBean {
             throw new NotFoundException();
         }
 
+        if (restProperties.isProductServiceEnabled()) {
+            List<Product> products = categoriesBean.getProducts(categorieId);
+            log.info("list of products: " + products.toString());
+            categorie.setProducts(products);
+            log.info("list of products for itemSpecificId: " + categorie.getProducts().toString());
+        }
+
         return categorie;
+    }
+
+    public List<Product> getProducts(String itemSpecificId) {
+        log.info("base url products " + baseUrlProducts);
+        if (baseUrlProducts.isPresent()) {
+            try {
+                return httpClient
+                        .target(baseUrlProducts.get() + "/v1/products?where=categories:EQ:" + itemSpecificId)
+                        .request().get(new GenericType<List<Product>>() {
+                        });
+            } catch (WebApplicationException | ProcessingException e) {
+                log.error(e);
+                throw new InternalServerErrorException(e);
+            }
+        }
+
+        return new ArrayList<>();
+    }
+
+    public List<Product> getProductsFallback(String customerId) {
+        return new ArrayList<>();
     }
 
     public Categorie createCategorie(Categorie categorie) {
