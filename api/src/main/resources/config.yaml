@@ -27,5 +27,5 @@ kumuluzee:
     external-services:
       product-service:
         enabled: true
-  healthy: true
+    healthy: true
 

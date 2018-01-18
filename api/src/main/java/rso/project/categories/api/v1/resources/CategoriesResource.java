@@ -1,9 +1,12 @@
 package rso.project.categories.api.v1.resources;
 
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import rso.project.categories.Categorie;
 import rso.project.categories.services.CategoriesBean;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -12,7 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
-@ApplicationScoped
+@RequestScoped
 @Path("/categories")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,6 +23,8 @@ public class CategoriesResource {
 
     @Context
     private UriInfo uriInfo;
+
+    private Logger log = LogManager.getLogger(CategoriesBean.class.getName());
 
     @Inject
     private CategoriesBean categoriesBean;
@@ -35,7 +40,7 @@ public class CategoriesResource {
     @GET
     @Path("/{categorieId}")
     public Response getCategorie(@PathParam("categorieId") String categorieId) {
-
+        log.info("get categorie resource");
         Categorie categorie = categoriesBean.getCategorie(categorieId);
 
         if (categorie == null) {
