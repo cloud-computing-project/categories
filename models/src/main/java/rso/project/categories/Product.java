@@ -1,45 +1,27 @@
 package rso.project.categories;
 
-import org.eclipse.persistence.annotations.UuidGenerator;
-
-import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "products")
-@NamedQueries(value =
-{
-    @NamedQuery(name = "Product.getAll", query = "SELECT p FROM products p")
-})
-@UuidGenerator(name = "idGenerator")
 public class Product {
 
-    @Id
-    @GeneratedValue(generator = "idGenerator")
     private String id;
 
     private String title;
 
-    @Column(name = "manufacturer_id")
     private String manufacturerId;
 
     private String price;
 
-    @Transient
     private List<Sale> sales;
 
-    @Transient
     private List<Shipping> shippings;
 
-    @Transient
     private List<Order> orders;
 
-    @Column(name = "returnpolicy_id")
     private String returnPolicyId;
 
-    @Column(name = "itemspecific_id")
     private String itemSpecificId;
 
-    @Column(name = "category_id")
     private String categoryId;
 
     public String getId() {

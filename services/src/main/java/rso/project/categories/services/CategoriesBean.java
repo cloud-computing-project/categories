@@ -93,7 +93,7 @@ public class CategoriesBean {
         if (baseUrlProducts.isPresent()) {
             try {
                 return httpClient
-                        .target(baseUrlProducts.get() + "/v1/products?where=categories:EQ:" + categorieId)
+                        .target(baseUrlProducts.get() + "/v1/products?where=categoryId:EQ:" + categorieId)
                         .request().get(new GenericType<List<Product>>() {
                         });
             } catch (WebApplicationException | ProcessingException e) {
