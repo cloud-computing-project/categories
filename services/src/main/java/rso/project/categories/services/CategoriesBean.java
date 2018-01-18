@@ -7,6 +7,8 @@ import rso.project.categories.Product;
 import rso.project.categories.services.config.RestProperties;
 
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -18,6 +20,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
@@ -43,6 +46,11 @@ public class CategoriesBean {
     @Inject
     @DiscoverService("products")
     private Optional<String> baseUrlProducts;
+
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+    }
 
     public List<Categorie> getCategories() {
 
