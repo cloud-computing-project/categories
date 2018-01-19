@@ -1,5 +1,6 @@
 package rso.project.categories;
 
+import javax.persistence.Transient;
 import java.util.List;
 
 public class Product {
@@ -23,6 +24,9 @@ public class Product {
     private String itemSpecificId;
 
     private String categoryId;
+
+    @Transient
+    private List<Rating> ratings;
 
     public String getId() {
         return id;
@@ -102,5 +106,14 @@ public class Product {
 
     public void setItemSpecificId(String itemSpecificId) {
         this.itemSpecificId = itemSpecificId;
+    }
+
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }
